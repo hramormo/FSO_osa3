@@ -61,7 +61,11 @@ app.get('/api/persons', (request, response) =>{
 })
 
 app.get('/api/info', (request, response, next)=> {
-    const personCount = Person.find({}).length
+    Person.find({})
+    .then(persons => {
+            const personCount = persons.length
+        }
+    )
     
     const timestamp = new Date()
     const options = {

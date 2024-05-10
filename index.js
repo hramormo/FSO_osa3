@@ -60,8 +60,9 @@ app.get('/api/persons', (request, response) =>{
     })
 })
 
-app.get('/api/info', (request, response)=> {
-    const personCount = persons.length
+app.get('/api/info', (request, response, next)=> {
+    const personCount = Person.find({}).length
+    
     const timestamp = new Date()
     const options = {
       weekday: 'short',
@@ -76,6 +77,7 @@ app.get('/api/info', (request, response)=> {
     const formattedTimestamp = timestamp.toLocaleString('en-US', options).replace(/,/g, '')
     console.log(formattedTimestamp)
     response.send(`<p>Phonebook has info for ${personCount} people</p> <p>${formattedTimestamp}</p>`)
+    .catch(error => next(error))
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
